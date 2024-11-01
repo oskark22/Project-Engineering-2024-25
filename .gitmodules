@@ -1,3 +1,6 @@
 [submodule "frontend/my-app-frontend"]
 	path = frontend/my-app-frontend
 	url = https://github.com/oskark22/Project-Engineering-2024-25.git
+[submodule "my-app-frontend"]
+	path = my-app-frontend
+	url = https://github.com/oskark22/Project-Engineering-2024-25.git

@@ -1,3 +1,5 @@
+import './App.css';
+
 import React, { useState, useEffect } from 'react';
 function App() {
   const [message, setMessage] = useState('');
@@ -9,7 +11,8 @@ function App() {
 
   return (
     <div className="App">
-      <h1>{message}</h1>
+      <h1>Satellite Follower App</h1>
+      <h2>{message}</h2>
     </div>
   );
 }

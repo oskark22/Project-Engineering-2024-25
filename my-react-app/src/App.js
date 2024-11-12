@@ -1,6 +1,6 @@
 import './App.css';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';         //useState is function that returns an array with two elements
 function App() {
   const [message, setMessage] = useState('');
   useEffect(() => {

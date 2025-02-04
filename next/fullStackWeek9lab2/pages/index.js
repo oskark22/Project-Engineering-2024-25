@@ -11,22 +11,22 @@
 import { useState, useEffect } from "react";
 
 function HomePage() {
-    const [message, setMessage] = useState("");
+    const [satellites, setSatellites] = useState(null);
   
     useEffect(() => {
-      getAllMessages();
+      getSatelliteData();
     }, []);
   
-    async function getAllMessages() {
+    async function getSatelliteData() {
       const response = await fetch("/api/get-message");
-      let data = await response.text();
-      setMessage(data);
+      let data = await response.json();
+      setSatellites(data.satellites);
     }
     
     return (
       <div>
         <h1>Satellite Follower App</h1> 
-        <h2>{message}</h2>
+        <h2>Number of satellites available: {satellites}</h2>
       </div>
     );
   }

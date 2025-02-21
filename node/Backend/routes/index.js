@@ -3,10 +3,11 @@ let router = express.Router();
 
 
 let numberOfSatellites = 0;
+let satData = [];
 
 //GET route to serve the integer to the frontend
 router.get('/', function (req, res, next) {
-  res.json({ satellites: numberOfSatellites });              
+  res.json({ satellites: satData });              
   //res.render('index');
 });
 
@@ -14,15 +15,15 @@ router.post('/api/sendMessage', function (req, res, next) {
   const { satellites } = req.body;       //Retrieve the integer from ESP32 from the request
 
   if(satellites) {
-    numberOfSatellites = satellites;
-    console.log(`Received number of satellites: ${satellites}`);
+    satData = satellites;
+    console.log("Received satellite data:", satData);
 
     
-    res.status(200).json({ message: "Satellite count updated", satellites });
+    res.status(200).json({ message: "Satellite Data received successfully", satellites });
   }
   else {
-    console.error("No satellites received");
-    res.status(400).json({ error: "No satellites received" });
+    console.error("No satellite data received");
+    res.status(400).json({ error: "No satellite data received" });
   }
 });
 

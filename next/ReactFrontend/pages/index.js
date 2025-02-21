@@ -11,14 +11,14 @@
 import { useState, useEffect } from "react";
 
 function HomePage() {
-    const [satellites, setSatellites] = useState(null);
+    const [satellites, setSatellites] = useState([]);
   
     useEffect(() => {
       getSatelliteData();
     }, []);
   
     async function getSatelliteData() {
-      const response = await fetch("/api/get-message");
+      const response = await fetch("/api/get-satellites");
       let data = await response.json();
       setSatellites(data.satellites);
     }
@@ -26,7 +26,8 @@ function HomePage() {
     return (
       <div>
         <h1>Satellite Follower App</h1> 
-        <h2>Number of satellites available: {satellites}</h2>
+        <p>Satellites:</p>
+        <SatelliteList satellites={satellites} />
       </div>
     );
   }

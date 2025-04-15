@@ -1,36 +1,34 @@
-// Notes:
-// The database data should be loaded in the root component:
-// - see _app.js
-// so it should be done in the <Layout> component
-// However, we'd then have to pass the data as a property down through
-// the component tree . . . more prop drilling!
-// So this is a temporary hack . . . means you have to visit the home page 
-// in order to get the database data.
-// We will fix this and provide a proper solution when we use the Contat API.
-
-import { useState, useEffect } from "react";
+import SatelliteList from "../components/satellites/SatelliteList";
+import { useState, useEffect } from "react"; 
 
 function HomePage() {
-    const [satellites, setSatellites] = useState([]);
-  
-    useEffect(() => {
-      getSatelliteData();
-    }, []);
-  
-    async function getSatelliteData() {
-      const response = await fetch("/api/get-satellites");
-      let data = await response.json();
-      setSatellites(data.satellites);
-    }
-    
-    return (
-      <div>
-        <h1>Satellite Follower App</h1> 
-        <p>Satellites:</p>
-        <SatelliteList satellites={satellites} />
-      </div>
-    );
+  const [gnssSatellites, setGnssSatellites] = useState([])
+  const [celestrakSatellites, setCelestrakSatellites] = useState([])
+
+
+  useEffect(() => {
+    fetchSatellites()
+  }, [])
+
+  async function fetchSatellites() {
+    const response = await fetch("/api/get-satellites")
+    let data = await response.json()
+    setGnssSatellites(data.gnssSatellites || [])
+    setCelestrakSatellites(data.celestrakSatellites || [])
   }
-  
-  export default HomePage;
+
+  //combine both GNSS and celestrak satellites into a single array 
+  const allSatellites = [...gnssSatellites, ...celestrakSatellites]    //Use spread operator(...) to flatten the arrays
+
+  return (
+    <div>
+      <h1>Satellite Follower App</h1>
+      <p>Satellites Near Galway:</p>
+      <SatelliteList satellites={allSatellites} />
+    </div>
+  );
+}
+
+export default HomePage
+
   

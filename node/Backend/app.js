@@ -1,12 +1,10 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var favicon = require('serve-favicon');
+var createError = require('http-errors');                           // http-errors: A module that helps you create HTTP error objects (like 404 Not Found).
+var express = require('express');                                   // Web framework to handle routes, middleware, and server logic.
+var path = require('path');                                         // A Node.js module to work with file and directory paths
+var logger = require('morgan');                                     //  morgan: Logging middleware to log HTTP requests
 
-var indexRouter = require('./routes/index');
-var hbs = require('express-handlebars');
+var indexRouter = require('./routes/index');                        // indexRouter: Imports your main router from routes/index.js
+var hbs = require('express-handlebars');                            // express-handlebars: Handlebars view engine integration for Express
 
 var app = express();
 
@@ -16,17 +14,11 @@ app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __di
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// Middleware Setup
+app.use(logger('dev'));                                             // Logs incoming HTTP requests in dev format                                       
+app.use(express.json());                                            // Parses incoming JSON data
 
-app.use(logger('dev'));
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
+app.use('/', indexRouter);                                          // All routes starting with / are handled by indexRouter
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

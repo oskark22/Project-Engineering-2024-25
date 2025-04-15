@@ -1,18 +1,96 @@
 .item {
-    margin: 1rem 0;
-  }
+  margin: 10px auto;
+  border: 2px solid black;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  width: 450px;
+  background-color: #f9f9f9;
+  position: relative;
+}
 
-  .content {
+/*.item h2 {
+  
+  display: flex;
+  /*display: inline-block;*/
+  /*position: relative;*/
+ /* align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 0;*/
+  /*white-space: nowrap; */    /*prevent (SatId) from wrapping to the next line*/
+
+/*}*/
+
+/*.satId {
+  font-size: 14px;
+  font-weight: normal;
+  color: gray;
+  /*flex-shrink: 0;*/
+  /*margin-right: 0;*/
+  /*display: inline-block;*/
+  /*vertical-align: middle;*/
+  /*margin-left: 1px;*/
+  /*position: relative;*/
+  /*top: -2px;*/
+  /*margin-right: 5px;*/
+/*}*/
+
+.item h2 {
+  /*display: inline-block; /* Keeps the satellite name centered */
+  /*position: relative; /* Needed for absolute positioning of SatID */
+  /*margin: 0;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;  /* Ensures long titles wrap nicely */
+  gap: 5px;
+  margin: 0;
+  text-align: center;
+}
+
+
+.satId {
+  font-size: 14px;
+  font-weight: normal;
+  color: gray;
+  /*position: absolute;*/
+  /*right: -50px; /* Moves SatID further right without affecting the name */
+  /*top: 20%;     /*move (SatId) to the same height as the numeric ID*/
+  white-space: nowrap; /* Prevents wrapping */
+  position: static;
+}
+
+.coordinateWrapper {
+  font-size: 14px;
+  display: inline-block;   /*This makes the element behave like an inline element (sitting next to other inline elements) but also allows it to have block-like properties, such as setting margins, padding, and width/height.*/
+  position: relative;      /*This sets the element’s position as relative, which allows you to use properties like top, right, left, or bottom for positioning any child elements (like the .lat and .long spans inside it).*/
+  margin: 2px 0;           /* smaller vertical space. This adds a small amount of vertical margin (space) above and below the element. It’s 2px on the top and bottom. */
+  line-height: 1.2;        /* tighter spacing. This adjusts the height between lines of text (if there are multiple lines). It’s set to 1.2 times the font size, making the lines a little closer together.*/
+}
+
+.lat, .long {
+  font-size: 14px;
+  font-weight: normal;
+  color: gray;
+  position: absolute;       /*This makes the .lat and .long elements positioned absolutely relative to their closest positioned ancestor (in this case, the .coordinateWrapper element). This allows the text to be placed precisely in the container.*/
+  right: 50px;              /*This moves the .lat or .long text 50 pixels from the right edge of the .coordinateWrapper element.*/
+  top: 0;                   /* Aligns better with numbers. This aligns the .lat and .long elements at the very top of their parent container (.coordinateWrapper). */
+  white-space: nowrap;      /*Prevent the text inside the .lat and .long elements from wrapping onto multiple lines. Ensures that the text stays in a single line, no matter how long it is*/
+}
+
+.item h5, .item h6 {
+  position: relative;         /* Needed for positioning inner span. Similar to the .coordinateWrapper class, this makes the h5 and h6 elements relative, so any child elements (like the .lat and .long spans) can be positioned relative to these headings. */
+  margin: 4px 0;              /* Removes default h5/h6 spacing. This removes the default margin space that browsers apply to h5 and h6 elements and adds 4px of space on the top and bottom. */
+  line-height: 1.2;           /*This sets the line height to 1.2 times the font size, which adjusts the spacing between lines in these elements. It makes the text a bit tighter.*/
+  font-size: 14px;            /* Make both same size. This makes sure that the font size of h5 and h6 elements is 14px, matching the .coordinateWrapper and .lat/.long spans.*/
+  display: block;             /* Ensure they’re on separate lines. This forces the h5 and h6 elements to behave like block elements, meaning they will take up the full width of their container and be displayed on their own line. Without this, h5 and h6 are inline elements by default, which might cause issues if you want them on separate lines. */
+}
+
+
+ /* .content {
     text-align: center;
     padding: 1rem;
-  }
+  }*/
   
-  .content h3 {
-    font-size: 1rem;
-    color: #2c292b;
-  }
-
-  .content h4 {
-    font-size: 1rem;
-    color: #2c292b;
-  }
+  

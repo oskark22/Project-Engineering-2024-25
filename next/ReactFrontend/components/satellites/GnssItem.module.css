@@ -1,0 +1,57 @@
+.item {
+    margin: 10px auto;
+    border: 2px solid black;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    width: 450px;
+    background-color: #f9f9f9;
+    position: relative;
+  }
+
+
+  .item h2 {
+    display: inline-block; /* Keeps the satellite name centered*/ 
+    position: relative; /* Needed for absolute positioning of SatID */
+    margin: 0;
+    /*display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;  /* Ensures long titles wrap nicely */
+    /*gap: 5px;
+    margin: 0;
+    text-align: center;*/
+  }
+
+
+  /*.item h2 {
+    position: relative; /* So .satId can be absolutely positioned inside */
+    /*margin: 0;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    /*padding-right: 50px; /* Add space for SatID label */
+  /*}*/
+
+  /*.satId {
+    font-size: 14px;
+    font-weight: normal;
+    color: gray;
+    /*position: absolute;*/
+    /*right: -50px; /* Moves SatID further right without affecting the name */
+    /*top: 20%;     /*move (SatId) to the same height as the numeric ID*/
+   /* white-space: nowrap; /* Prevents wrapping */
+    /*position: static;
+  }*/
+
+  .satId {
+    position: absolute;
+    font-size: 14px;
+    font-weight: normal;
+    color: gray;
+    right: -170px; /* adjust this as needed */
+    /*top: 2px;*/
+    top: 20%;
+    white-space: nowrap;
+  }
+  

@@ -1,15 +1,14 @@
 import CelestrakList from "../components/satellites/CelestrakList";
 import GnssList from "../components/satellites/GnssList";
-import SatelliteList from "../components/satellites/SatelliteList";
 import { useState, useEffect } from "react";
 
 function HomePage() {
-  const [gnssSatellites, setGnssSatellites] = useState([]);
-  const [celestrakSatellites, setCelestrakSatellites] = useState([]);
+  const [gnssSatellites, setGnssSatellites] = useState([])
+  const [celestrakSatellites, setCelestrakSatellites] = useState([])
 
   useEffect(() => {
-    fetchSatellites();
-  }, []);
+    fetchSatellites()
+  }, [])
 
   async function fetchSatellites() {
     const response = await fetch("/api/get-satellites")

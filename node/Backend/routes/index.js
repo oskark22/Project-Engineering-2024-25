@@ -1,13 +1,10 @@
-let express = require('express')                  
-let satellite = require("satellite.js")
-let router = express.Router()
+let express = require('express')              // express is a Node.js web server framework            
+let satellite = require("satellite.js")       // Import satellite.js for satellite tracking calculations
+let router = express.Router()                 // Mini express app that can handle routes
 
 //Coordinates for Galway, Ireland
-const galwayLat = 53.2709
-const galwayLong = -9.0627
-
-//https://celestrak.org/NORAD/elements/gp.php?GROUP=stations&FORMAT=json
-//https://celestrak.org/NORAD/elements/gp.php?GROUP=stations&FORMAT=tle
+const galwayLat = 53.2709                     // 53.2709 degrees north of the Equator. Latitude measures how far north or south you are from the Equator (which is 0°). Positive values = Northern Hemisphere.
+const galwayLong = -9.0627                    // 9.0627 degrees west of the Prime Meridian. (longitude 0° at Greenwich, England). Negative values = Western Hemisphere.
 
 
 let gnssSatellites = []    //Array to store GNSS satellite data  received  from ESP32
@@ -22,31 +19,31 @@ async function fetchCelestrakData() {
     let rows = tleData.split("\n").map(row => row.trim()).filter(row => row.length > 0)
     let mySatellites = []    //Array to store the processed satellites
 
-    //Process data in sets of three lines (Satellite name, tle line 1 and tle line 2)
+    //Process data in sets of three lines (Satellite name, tle line 1 and tle line 2). Every 3 lines are processed as one satellite. 
     for(let i = 0; i < rows.length; i += 3) {
-      if(i + 2 < rows.length) {   //Ensure there are three valid lines
-        let satName = rows[i]    //First line: satellite name
-        let tleLine1 = rows[i + 1]
-        let tleLine2 = rows[i + 2]
+      if(i + 2 < rows.length) {       //Ensure there are three valid lines
+        let satName = rows[i]         //First line: satellite name
+        let tleLine1 = rows[i + 1]    // orbital parameters (inclination, eccentricity, etc).
+        let tleLine2 = rows[i + 2]    // velocity & position data.
 
         try {
           //convert the TLE data to a satellite object
-          const satelliteRecord = satellite.twoline2satrec(tleLine1, tleLine2)
+          const satelliteRecord = satellite.twoline2satrec(tleLine1, tleLine2)                // use twoline2satrec to convert TLE into a JSON object
           const currentTime = new Date()     //Get current time
 
-          //Calculate satellite's position in Earth-Centered Inertial (ECI) coordinates
+          //Calculate satellite's position in Earth-Centered Inertial (ECI) coordinates. Compute the satellite's position & velocity at currentTime
           const satPositionVelocity = satellite.propagate(satelliteRecord, currentTime)
 
           //Check if position data is available
           if(satPositionVelocity.position) {
             const ECIposition = satPositionVelocity.position   //Get satellite position in ECI coordinates
-            const gmstTime = satellite.gstime(currentTime)     //Compute Greenwich Mean Sidereal Time
+            const gmstTime = satellite.gstime(currentTime)     //Compute Greenwich Mean Sidereal Time to see how much Earth has rotated. GMST measures how much the Earth has rotated relative to the stars. Needed for converting ECI coordinates into geographic coordinates (latitude and longitude).
             const geodeticPosition = satellite.eciToGeodetic(ECIposition, gmstTime)  // Convert ECI to latitude/longitude
 
             const lat = satellite.degreesLat(geodeticPosition.latitude)    // Convert latitude to degrees
             const long = satellite.degreesLong(geodeticPosition.longitude)
 
-            //Check if the satellite is near Galway(within +- degrees latitude/longitude)
+            //Check if the satellite is near Galway(within +- degrees latitude/longitude). (51.0 - 53.2709) = 2.2709 (less than 5). (-7.5 - (-9.0627)) = 1.5627 (less than 5). (44.0 - 53.2709) = 9.2709 (over 5)
             if(Math.abs(lat - galwayLat) < 5 && Math.abs(long - galwayLong) < 5) {
               mySatellites.push({
                 name: satName,

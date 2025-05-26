@@ -6,23 +6,19 @@ function HomePage() {
   const [gnssSatellites, setGnssSatellites] = useState([])
   const [celestrakSatellites, setCelestrakSatellites] = useState([])
 
-  useEffect(() => {
+  useEffect(() => {                                                   // When the component first loads ( [] = run once), it calls fetchSatellites
     fetchSatellites()
   }, [])
 
   async function fetchSatellites() {
     const response = await fetch("/api/get-satellites")
     let data = await response.json()
-    setGnssSatellites(data.gnssSatellites || [])
+    setGnssSatellites(data.gnssSatellites || [])                      // If the API didn't send data, it safely falls back to empty arrays (|| []).
     setCelestrakSatellites(data.celestrakSatellites || [])
   }
 
-  //combine both GNSS and celestrak satellites into a single array
-  //const allSatellites = [...gnssSatellites, ...celestrakSatellites]    //Use spread operator(...) to flatten the arrays
   const navigationSatellites = [gnssSatellites]
   const otherSatellites = [celestrakSatellites]
-
-  //<SatelliteList satellites={allSatellites} />
 
   return (
     <div>

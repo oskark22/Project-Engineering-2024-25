@@ -14,7 +14,7 @@ function GnssList(props) {
                     country={satellite.country}
                     />
                 ))
-            ):(
+            ):(                                         // this is a ternary operator - short for if-else inside JSX
                 <p>No GNSS Satellites Found</p>
             )}
         </ul>
